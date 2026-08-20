@@ -9,15 +9,16 @@ An end-to-end, event-driven Retrieval-Augmented Generation (RAG) system built wi
 The system is separated into two modular workflows:
 
 ### 1. Document Ingestion & Indexing Pipeline
+![Ingestion Pipeline](/ingestion-workflow.png.png)
 * **Trigger:** Listens for newly uploaded files in a target Google Drive folder via `Google Drive Trigger`.
 * **Processing:** Downloads files and passes them to a `Default Data Loader` using `Recursive Character Text Splitter` for optimal chunking and overlap.
-* **Vectorization & Storage:** Embeds text chunks via `Embeddings OpenAI` (`text-embedding-3-small` / `ada-002`) and upserts them directly into a `Pinecone Vector Store` index.
+* **Vectorization & Storage:** Embeds text chunks via `Embeddings OpenAI` (`text-embedding-3-small`) and upserts them directly into a `Pinecone Vector Store` index.
 
 ### 2. Conversational Retrieval & Generation Pipeline
+![Chat Retrieval Pipeline](/chat-workflow.png.png)
 * **Trigger:** Captures user queries via `When chat message received`.
 * **Retrieval:** Converts incoming user queries into embeddings to perform similarity search against Pinecone via `Vector Store Retriever`.
 * **Response Generation:** Injects relevant document chunks into the prompt context and queries the `OpenAI Chat Model` via the `Question and Answer Chain` to return grounded, hallucination-free answers.
-
 ---
 
 ## 🛠️ Tech Stack
